@@ -21,45 +21,45 @@ spec:
       nodeSelector:
         cloud.google.com/gke-nodepool: "pool-2"
       containers:
-      - name: training-server
-        image: placeholder-for-training-server-image:latest # TODO Replace with actual image
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8000
-          name: training-port
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 8000
-          initialDelaySeconds: 30
-          periodSeconds: 20
-        readinessProbe:
-          httpGet:
-            path: /readyz
-            port: 8000
-          initialDelaySeconds: 45
-          periodSeconds: 10
-        resources:
-          requests:
-            cpu: "1000m"
-            memory: "2Gi"
-          limits:
-            cpu: "2000m"
-            memory: "4Gi"
-        envFrom:
-        - configMapRef:
-            name: latency-predictor-config
-        env:
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: SERVER_TYPE
-          value: "training"
-        volumeMounts:
-        - name: model-storage
-          mountPath: /models
+        - name: training-server
+          image: placeholder-for-training-server-image:latest  # TODO Replace with actual image
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+              name: training-port
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8000
+            initialDelaySeconds: 45
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "1000m"
+              memory: "2Gi"
+            limits:
+              cpu: "2000m"
+              memory: "4Gi"
+          envFrom:
+            - configMapRef:
+                name: latency-predictor-config
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: SERVER_TYPE
+              value: "training"
+          volumeMounts:
+            - name: model-storage
+              mountPath: /models
       volumes:
-      - name: model-storage
-        persistentVolumeClaim:
-          claimName: training-models-pvc
+        - name: model-storage
+          persistentVolumeClaim:
+            claimName: training-models-pvc

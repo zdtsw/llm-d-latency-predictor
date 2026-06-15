@@ -6,4 +6,4 @@ patches:
   - path: deployment.yaml              # drop GKE nodeSelector + restricted-v2 securityContext
   - path: pvc.yaml                     # use the cluster default StorageClass
   - path: delete-storageclass.yaml     # remove the GKE-only hyperdisk StorageClass
-  - path: delete-external-service.yaml # remove the external LoadBalancer, we dont make a new Router for this in ocp unless it is needed
+  - path: delete-external-service.yaml  # remove the external LoadBalancer, we dont make a new Router for this in ocp unless it is needed

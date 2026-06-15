@@ -11,10 +11,10 @@ spec:
     app: training-server
     component: training
   ports:
-  - protocol: TCP
-    port: 8000
-    targetPort: 8000
-    name: training
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+      name: training
 
 ---
 # --- Optional: External Training Service ---
@@ -28,6 +28,6 @@ spec:
     app: training-server
     component: training
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8000
+    - protocol: TCP
+      port: 8080
+      targetPort: 8000

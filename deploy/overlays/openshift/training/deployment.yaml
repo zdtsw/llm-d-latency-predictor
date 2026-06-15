@@ -13,9 +13,9 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - name: training-server
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
+        - name: training-server
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL

@@ -13,9 +13,9 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - name: prediction-server
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
+        - name: prediction-server
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
