@@ -3,7 +3,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: latency-predictor-test
-  namespace: default
   labels:
     app: latency-predictor-test
     component: test
@@ -20,7 +19,6 @@ spec:
       restartPolicy: Never
       containers:
       - name: test-runner
-        # Use your test image here
         image: placeholder-for-test-image:latest # TODO Replace with actual test image
         imagePullPolicy: Always
         resources:
@@ -46,7 +44,6 @@ spec:
         # Override the default command to run specific pytest
         command: ["pytest"]
         args: ["-v", "-s", "tests/test_dual_server_client.py"]
-        # If your tests need to store results or logs
         volumeMounts:
         - name: test-results
           mountPath: /test-results

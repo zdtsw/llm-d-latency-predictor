@@ -59,7 +59,9 @@ src/llm_d_latency_predictor/
   training_server.py      # FastAPI training server (trains models from request traces)
 tests/
   test_dual_server_client.py  # integration / load-test client exercising both servers
-deploy/                   # Kubernetes manifests and kustomization
+deploy/                   # Kustomize manifests
+  base/                   # cloud-agnostic base (training/ + prediction/ components)
+  overlays/openshift/     # OpenShift overlay (Route, restricted-v2 SCC, default StorageClass)
 Dockerfile-prediction     # Image for the prediction server
 Dockerfile-training       # Image for the training server
 Dockerfile-test           # Image that runs the test client as a Job

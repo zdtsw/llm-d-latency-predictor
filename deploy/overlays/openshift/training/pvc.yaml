@@ -1,0 +1,7 @@
+# Use the cluster's default StorageClass for the models PVC.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: training-models-pvc
+spec:
+  storageClassName: ""
