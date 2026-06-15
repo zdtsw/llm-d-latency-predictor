@@ -1,0 +1,27 @@
+FROM registry.access.redhat.com/ubi9/python-312:latest@sha256:dad2d6acf3f5e48d26abf9dbdea2f2bab3b02c62d1d6e9e0330c8d43f0c3bfb4
+
+USER root
+
+RUN dnf install -y libgomp && dnf clean all
+
+WORKDIR /app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY pyproject.toml README.md ./
+COPY src ./src
+RUN pip install --no-cache-dir --no-deps .
+
+EXPOSE 8000
+
+USER 1001:1001
+
+CMD ["uvicorn", "llm_d_latency_predictor.training_server:app", "--host", "0.0.0.0", "--port", "8000"]
+
+LABEL com.redhat.component="odh-latency-predictor-training" \
+      name="odh-latency-predictor-training" \
+      description="Latency prediction training server for llm-d" \
+      summary="Trains online ML models for TTFT/TPOT latency prediction" \
+      io.k8s.display-name="odh-latency-predictor-training" \
+      io.k8s.description="Latency prediction training server for llm-d"

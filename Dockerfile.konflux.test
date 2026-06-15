@@ -1,0 +1,34 @@
+FROM registry.access.redhat.com/ubi9/python-312:latest@sha256:dad2d6acf3f5e48d26abf9dbdea2f2bab3b02c62d1d6e9e0330c8d43f0c3bfb4
+
+USER root
+
+RUN dnf install -y --allowerasing curl jq && dnf clean all
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir \
+    pytest \
+    pytest-asyncio \
+    requests \
+    httpx \
+    aiohttp
+
+COPY tests ./tests
+
+RUN mkdir -p /test-results
+
+ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1
+
+USER 1001:1001
+
+CMD ["pytest", "-v", "-s", "tests/test_dual_server_client.py"]
+
+LABEL com.redhat.component="odh-latency-predictor-test" \
+      name="odh-latency-predictor-test" \
+      description="Test harness for llm-d latency predictor" \
+      summary="Integration tests for latency prediction training and prediction servers" \
+      io.k8s.display-name="odh-latency-predictor-test" \
+      io.k8s.description="Test harness for llm-d latency predictor"
