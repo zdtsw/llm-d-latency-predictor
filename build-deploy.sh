@@ -144,6 +144,23 @@ deploy_to_gke() {
     echo_status "Deployment completed successfully."
 }
 
+# Deploy to OpenShift
+deploy_to_ocp() {
+    echo_status "Deploying to OpenShift..."
+
+    local ns="openshift-latency-predictor"
+
+    oc apply -k deploy/overlays/openshift
+
+    echo_status "Waiting for training server deployment..."
+    oc rollout status deployment/training-server-deployment -n "$ns" --timeout=300s
+
+    echo_status "Waiting for prediction server deployment..."
+    oc rollout status deployment/prediction-server-deployment -n "$ns" --timeout=300s
+
+    echo_status "Deployment completed successfully."
+}
+
 # Deploy test job
 deploy_test() {
     echo_status "Deploying test job..."
@@ -350,6 +367,9 @@ main() {
         "deploy")
             deploy_to_gke
             ;;
+        "deploy-ocp")
+            deploy_to_ocp
+            ;;
         "test-deploy")
             check_files
             deploy_test
@@ -386,13 +406,14 @@ main() {
             cleanup
             ;;
         *)
-            echo "Usage: $0 {check|build|push|deploy|test-deploy|test|info|images|basic-test|all|full}"
+            echo "Usage: $0 {check|build|push|deploy|deploy-ocp|test-deploy|test|info|images|basic-test|all|full}"
             echo ""
             echo "Commands:"
             echo "  check      - Check if required files exist"
             echo "  build      - Build Docker images (including test if Dockerfile-test exists)"
             echo "  push       - Push images to Artifact Registry"
             echo "  deploy     - Deploy to GKE"
+            echo "  deploy-ocp - Deploy to OpenShift (deploy/overlays/openshift)"
             echo "  test-deploy- Deploy test job only"
             echo "  test       - Run comprehensive tests using test image"
             echo "  info       - Get service information"
