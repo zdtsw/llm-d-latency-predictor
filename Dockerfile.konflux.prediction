@@ -2,12 +2,10 @@ FROM registry.access.redhat.com/ubi9/python-312:latest@sha256:55ddb67dcfc6c7ec07
 
 USER root
 
-RUN dnf install -y libgomp && dnf clean all
-
 WORKDIR /app
 
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --no-deps -r requirements.txt
 
 COPY pyproject.toml README.md ./
 COPY src ./src

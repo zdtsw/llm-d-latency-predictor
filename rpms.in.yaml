@@ -1,0 +1,13 @@
+contentOrigin:
+  repofiles:
+    - ./ubi.repo
+
+packages:
+  - jq
+
+arches:
+  - x86_64
+  - aarch64
+
+context:
+  containerfile: Dockerfile.konflux.test
