@@ -2,18 +2,12 @@ FROM registry.access.redhat.com/ubi9/python-312:latest@sha256:37c869e16388c960d5
 
 USER root
 
-RUN dnf install -y --allowerasing curl jq && dnf clean all
+RUN dnf install -y jq && dnf clean all
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir \
-    pytest \
-    pytest-asyncio \
-    requests \
-    httpx \
-    aiohttp
+COPY requirements.txt ./
+RUN pip install --no-cache-dir --no-deps -r requirements.txt
 
 COPY tests ./tests
 

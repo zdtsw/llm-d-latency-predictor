@@ -23,6 +23,14 @@ dependencies = [
     "orjson",
 ]
 
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-asyncio",
+    "httpx",
+    "aiohttp",
+]
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
