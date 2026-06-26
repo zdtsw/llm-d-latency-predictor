@@ -131,8 +131,8 @@ push_images() {
 deploy_to_gke() {
     echo_status "Deploying to GKE..."
 
-    # Apply the Kubernetes manifests
-    kubectl apply -f dual-server-deployment.yaml
+    # Apply the Kubernetes manifests (kustomize base)
+    kubectl apply -k deploy/base
 
     # Wait for deployments to be ready
     echo_status "Waiting for training server deployment..."
