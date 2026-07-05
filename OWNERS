@@ -1,9 +1,13 @@
 # See https://go.k8s.io/owners for format documentation
 
 reviewers:
-  - ahg-g
-  - kaushikmitr
+  - Gregory-Pereira
+  - madhugoutham
+  - RishabhSaini
+  - zdtsw
 
 approvers:
-  - ahg-g
-  - kaushikmitr
+  - Gregory-Pereira
+  - madhugoutham
+  - RishabhSaini
+  - zdtsw
