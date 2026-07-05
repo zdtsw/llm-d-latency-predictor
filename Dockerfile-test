@@ -15,8 +15,7 @@ RUN pip install --no-cache-dir \
     pytest \
     pytest-asyncio \
     requests \
-    httpx \
-    aiohttp
+    httpx
 
 # Copy test sources
 COPY tests ./tests
