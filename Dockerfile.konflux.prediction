@@ -4,8 +4,9 @@ FROM ${BASE_IMAGE}
 COPY requirements-konflux.txt ./
 RUN pip install --no-cache-dir --no-deps -r requirements-konflux.txt
 
-COPY src ./src
-ENV PYTHONPATH=/opt/app-root/src
+COPY VERSION ./
+COPY common ./common
+COPY prediction ./prediction
 
 USER root
 RUN mkdir -p /local_models && chown 1001:0 /local_models
@@ -16,7 +17,7 @@ ENV UVICORN_WORKERS=8
 
 USER 1001
 
-CMD ["sh", "-c", "exec uvicorn llm_d_latency_predictor.prediction_server:app --host 0.0.0.0 --port 8001 --workers $UVICORN_WORKERS"]
+CMD ["sh", "-c", "exec uvicorn prediction.prediction_server:app --host 0.0.0.0 --port 8001 --workers $UVICORN_WORKERS"]
 
 LABEL com.redhat.component="odh-latency-predictor-prediction" \
       name="odh-latency-predictor-prediction" \
