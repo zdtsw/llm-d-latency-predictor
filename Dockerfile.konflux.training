@@ -4,14 +4,15 @@ FROM ${BASE_IMAGE}
 COPY requirements-konflux.txt ./
 RUN pip install --no-cache-dir --no-deps -r requirements-konflux.txt
 
-COPY src ./src
-ENV PYTHONPATH=/opt/app-root/src
+COPY VERSION ./
+COPY common ./common
+COPY training ./training
 
 EXPOSE 8000
 
 USER 1001
 
-CMD ["uvicorn", "llm_d_latency_predictor.training_server:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "training.training_server:app", "--host", "0.0.0.0", "--port", "8000"]
 
 LABEL com.redhat.component="odh-latency-predictor-training" \
       name="odh-latency-predictor-training" \

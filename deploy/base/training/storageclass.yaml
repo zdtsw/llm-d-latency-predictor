@@ -1,0 +1,13 @@
+# --- StorageClass for Hyperdisk (GKE) ---
+# GKE-specific. The OpenShift overlay deletes this and lets the PVC fall back
+# to the cluster's default StorageClass.
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hyperdisk-balanced-sc
+provisioner: pd.csi.storage.gke.io
+parameters:
+  type: hyperdisk-balanced
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
